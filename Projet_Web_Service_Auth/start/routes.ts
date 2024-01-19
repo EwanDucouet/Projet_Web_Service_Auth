@@ -20,6 +20,11 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.post('/api/account', 'AuthController.register') // sign up
+Route.post('/api/token', 'AuthController.login') // log in
+Route.get('/api/account/:uid', 'AuthController.me').middleware(['auth']) // get user
+Route.put('/api/account/:uid', 'AuthController.update').middleware(['auth']) // update user
+//Route.post('/api/refresh-token/:refreshToken/token', ) // refresh session
+//Route.get('/api/validate/:accessToken', ) // validate token
+
+Route.resource('tasks', 'TaskController').apiOnly()
